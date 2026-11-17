@@ -84,6 +84,12 @@ jobs:
           cat dist/build-info.txt
 
             sonar:
+      - name: Simular deploy
+        run: |
+          echo "Publicando o conteúdo abaixo..."
+          cat dist/build-info.txt
+
+  sonar:
     name: Sonar
     runs-on: ubuntu-latest
     needs: test
