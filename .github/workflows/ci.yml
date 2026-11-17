@@ -93,7 +93,7 @@ jobs:
     name: Sonar
     runs-on: ubuntu-latest
     needs: test
-       permissions:
+  permissions:
       contents: read
       id-token: write
     steps:
