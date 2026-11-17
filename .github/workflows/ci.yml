@@ -17,3 +17,9 @@ jobs:
 
       - name: Checar sintaxe
         run: python -m compileall -q .
+
+      - name: Instalar pytest
+        run: pip install pytest
+
+      - name: Rodar testes
+        run: python -m pytest
