@@ -20,7 +20,7 @@ jobs:
           cache: pip
 
       - name: Instalar dependências
-        run:  pip install --only-binary :all: -r requirements-dev.txt
+        run: "pip install --only-binary :all: -r requirements-dev.txt"
 
       - name: Rodar o ruff
         run: ruff check .
@@ -42,7 +42,7 @@ jobs:
           cache: pip
 
       - name: Instalar dependências
-        run:  pip install --only-binary :all: -r requirements-dev.txt
+        run: "pip install --only-binary :all: -r requirements-dev.txt"
 
       - name: Rodar os testes
         run: python -m pytest -v
