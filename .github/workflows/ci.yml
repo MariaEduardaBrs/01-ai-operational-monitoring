@@ -64,3 +64,21 @@ jobs:
         with:
           name: build-info
           path: dist/
+
+  deploy:
+    name: Deploy (simulado)
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment: producao-simulada
+    steps:
+      - name: Baixar artefato do build
+        uses: actions/download-artifact@v4
+        with:
+          name: build-info
+          path: dist/
+
+      - name: Simular deploy
+        run: |
+          echo "Publicando o conteúdo abaixo..."
+          cat dist/build-info.txt
