@@ -9,6 +9,11 @@ on:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  
 jobs:
   lint:
     name: Lint
@@ -73,6 +78,11 @@ jobs:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment: producao-simulada
+
+    concurrency:
+      group: deploy-producao-simulada
+      cancel-in-progress: false
+      
     steps:
       - name: Baixar artefato do build
         uses: actions/download-artifact@v4
