@@ -54,5 +54,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Simular build
-        run: echo "Lint e testes passaram, pronto para empacotar"
+      - name: Gerar arquivo de build
+        run: |
+          mkdir dist
+          echo "Build gerado pelo commit ${{ github.sha }}" > dist/build-info.txt
+
+      - name: Guardar artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-info
+          path: dist/
