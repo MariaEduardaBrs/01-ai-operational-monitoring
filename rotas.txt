@@ -1,0 +1,6 @@
+GET /api/health PUBLICA
+GET /api/status PUBLICA
+POST /api/auth/login PUBLICA
+GET /api/notas LOGIN
+POST /api/notas/inserir LOGIN
+GET /api/admin/audit ADMIN
