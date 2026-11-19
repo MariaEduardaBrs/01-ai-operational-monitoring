@@ -123,3 +123,19 @@ jobs:
           args: >
             -Dsonar.organization=mariaeduardabrs
             -Dsonar.projectKey=MariaEduardaBrs_01-ai-operational-monitoring
+
+  matriz:
+    name: Matriz de rotas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Regenerar a matriz
+        run: python gerar_matriz.py
+
+      - name: Conferir se a matriz commitada está atualizada
+        run: git diff --exit-code MATRIZ_ROTAS.md
