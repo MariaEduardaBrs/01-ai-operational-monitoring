@@ -52,7 +52,7 @@ jobs:
         run: "pip install --only-binary :all: -r requirements-dev.txt"
 
       - name: Rodar os testes
-        run: python -m pytest -v
+        run: python -m pytest -v --cov=. --cov-report=xml
 
   build:
     name: Build
