@@ -54,6 +54,13 @@ jobs:
       - name: Rodar os testes
         run: python -m pytest -v --cov=. --cov-report=xml
 
+      - name: Guardar relatório de cobertura
+        if: matrix.python-version == '3.13'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml
+
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -107,6 +114,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Baixar relatório de cobertura
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-xml
+
       - name: Cache SonarQube packages
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
@@ -120,9 +132,10 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@59202af334b4ba7b5db01b701b8e79f8b3bef0f4 # v8.5.0
         with:
-          args: >
+         args: >
             -Dsonar.organization=mariaeduardabrs
             -Dsonar.projectKey=MariaEduardaBrs_01-ai-operational-monitoring
+            -Dsonar.python.coverage.reportPaths=coverage.xml
 
   matriz:
     name: Matriz de rotas
