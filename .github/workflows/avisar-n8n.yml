@@ -1,0 +1,28 @@
+name: Avisar n8n
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  avisar:
+    name: Avisar n8n
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    steps:
+      - name: Chamar o webhook do n8n
+        env:
+          N8N_URL: ${{ secrets.N8N_WEBHOOK_URL }}
+          N8N_TOKEN: ${{ secrets.N8N_WEBHOOK_TOKEN }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          curl --fail-with-body -sS -X POST "$N8N_URL" \
+            -H "X-Esteira-Token: $N8N_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"run_id\": $RUN_ID}"
